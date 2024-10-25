@@ -1,0 +1,19 @@
+/* You can add this in your global CSS or component CSS file */
+.slider-container {
+    width: 100%; /* Full width of parent container */
+    max-width: 92vw; /* Prevents overflow */
+    overflow: hidden;
+    margin-left: 4.5rem;
+  }
+  
+  .slide-item {
+    width: auto; 
+  }
+  
+  .slide-image {
+    width: 100%;
+    height:60vh;     /* Optional, set height to fill viewport */
+    object-fit: cover; /* Ensures image scales without distortion */
+    border-radius: 10px;
+  }
+  
