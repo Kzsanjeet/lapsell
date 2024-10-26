@@ -1,0 +1,69 @@
+.image-container {
+    width: 400px;
+    height: 400px;
+    position: relative; /* Enables absolute positioning for the button */
+    overflow: hidden;    /* Ensures button stays within bounds if adjusted */
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* Adjusts image to fill container without distortion */
+    border-radius: 10px; /* Optional: adds rounded corners */
+}
+.image:hover{
+    transition: all 0.4s ease-in-out;
+    transform: scale(1.1);
+}
+
+.overlay-button {
+    position: absolute;
+    top: 90%;            /* buttoms button vertically */ 
+    left: 50%;           /* Centers button horizontally */
+    transform: translate(-50%, -50%); /* Adjusts button position to exact center */
+    padding: 10px 20px;
+    background-color:#424874; /* Optional: translucent background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1;          /* Ensures button stays on top of the image */
+    width: 7rem;
+}
+
+.overlay-button {
+    z-index: 1;
+    position: absolute;
+    font-size: inherit;
+    font-family: inherit;
+    color: white;
+    padding: 0.5em 1em;
+    outline: none;
+    border: none;   
+    background-color:#424874 ;
+  }
+  
+  .overlay-button:hover {
+    cursor: pointer;
+  }
+  
+  .overlay-button::before {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 4px solid hsl(236, 32%, 26%);
+    transform-origin: center;
+    transform: scale(1);
+  }
+  
+  .overlay-button:hover::before {
+    transition: all 0.7s ease-in-out;
+    transform-origin: center;
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  
