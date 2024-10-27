@@ -8,14 +8,17 @@ const Categories = () => {
             <h1 className='font-bold text-4xl'>Shop by Categories</h1>
             <p className='text-gray-500 p-2 pb-10'>Choose from wide range of categories</p>      
         </div>
-        <div className='flex flex-col max-[3]:'>
-            <Category/>
-            <Category/>
-            <Category/>
-            <Category/>
-            <Category/>
-            <Category/>
+        <div className="flex flex-row flex-wrap justify-center space-x-4">
+            <Category />
+            <Category />
+            <Category />
+            <Category />
+            <Category />
+            <Category />
+            <Category />
+            <Category />
         </div>
+
     </div>
   )
 }

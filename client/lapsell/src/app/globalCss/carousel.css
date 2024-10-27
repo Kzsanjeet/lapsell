@@ -4,6 +4,7 @@
     max-width: 92vw; /* Prevents overflow */
     overflow: hidden;
     margin-left: 4.5rem;
+    margin-top: 2rem;
   }
   
   .slide-item {
