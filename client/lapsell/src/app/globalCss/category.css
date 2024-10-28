@@ -1,6 +1,6 @@
 .image-container {
-    width: 400px;
-    height: 400px;
+    width: 350px;
+    height: 350px;
     position: relative; /* Enables absolute positioning for the button */
     overflow: hidden;    /* Ensures button stays within bounds if adjusted */
 }

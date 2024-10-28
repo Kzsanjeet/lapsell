@@ -3,6 +3,7 @@ import Nabbar from './pcomponents/Nabbar'
 import Footer from './pcomponents/Footer'
 import Carousel from './pcomponents/Carousel'
 import Categories from './pcomponents/Categories'
+import Card from './pcomponents/Card'
 
 
 // FF6600 - orange
@@ -13,6 +14,7 @@ const page = () => {
       <Nabbar/>
       <Carousel/>
       <Categories/>
+      <Card/>
       <Footer/>
     </div>
   )

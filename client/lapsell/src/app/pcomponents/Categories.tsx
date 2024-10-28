@@ -8,7 +8,7 @@ const Categories = () => {
             <h1 className='font-bold text-4xl'>Shop by Categories</h1>
             <p className='text-gray-500 p-2 pb-10'>Choose from wide range of categories</p>      
         </div>
-        <div className="flex flex-row flex-wrap justify-center space-x-4">
+        <div className="flex flex-row flex-wrap justify-center w-10/12">
             <Category />
             <Category />
             <Category />
