@@ -1,0 +1,83 @@
+[
+    {
+      "id": 1,
+      "title": "MacBook Pro",
+      "category": "Laptop",
+      "price": "Rs120000",
+      "isNew": true,
+      "imageUrl": "https://example.com/macbookpro.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Dell XPS 15",
+      "category": "Laptop",
+      "price": "Rs105000",
+      "isNew": false,
+      "imageUrl": "https://example.com/dellxps15.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Acer Aspire 7",
+      "category": "Laptop",
+      "price": "Rs75000",
+      "isNew": true,
+      "imageUrl": "https://example.com/aceraspire7.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Lenovo ThinkPad X1 Carbon",
+      "category": "Laptop",
+      "price": "Rs110000",
+      "isNew": false,
+      "imageUrl": "https://example.com/thinkpadx1carbon.jpg"
+    },
+    {
+      "id": 5,
+      "title": "HP Envy 13",
+      "category": "Laptop",
+      "price": "Rs82000",
+      "isNew": true,
+      "imageUrl": "https://example.com/hpenvy13.jpg"
+    },
+    {
+      "id": 6,
+      "title": "Asus ZenBook 14",
+      "category": "Laptop",
+      "price": "Rs78000",
+      "isNew": false,
+      "imageUrl": "https://example.com/asuszenbook14.jpg"
+    },
+    {
+      "id": 7,
+      "title": "Microsoft Surface Laptop 4",
+      "category": "Laptop",
+      "price": "Rs97000",
+      "isNew": true,
+      "imageUrl": "https://example.com/surfacelaptop4.jpg"
+    },
+    {
+      "id": 8,
+      "title": "Razer Blade 15",
+      "category": "Laptop",
+      "price": "Rs150000",
+      "isNew": false,
+      "imageUrl": "https://example.com/razerblade15.jpg"
+    },
+    {
+      "id": 9,
+      "title": "LG Gram 17",
+      "category": "Laptop",
+      "price": "Rs93000",
+      "isNew": true,
+      "imageUrl": "https://example.com/lggram17.jpg"
+    },
+    {
+      "id": 10,
+      "title": "Apple MacBook Air M2",
+      "category": "Laptop",
+      "price": "Rs100000",
+      "isNew": true,
+      "imageUrl": "https://example.com/macbookairm2.jpg"
+    }
+  ]
+  

@@ -4,6 +4,7 @@ import Footer from './pcomponents/Footer'
 import Carousel from './pcomponents/Carousel'
 import Categories from './pcomponents/Categories'
 import Card from './pcomponents/Card'
+import Review from './pcomponents/Review'
 
 
 // FF6600 - orange
@@ -15,6 +16,7 @@ const page = () => {
       <Carousel/>
       <Categories/>
       <Card/>
+      <Review/>
       <Footer/>
     </div>
   )
