@@ -3,6 +3,7 @@
     width: 100%; /* Full width of parent container */
     max-width: full; /* Prevents overflow */
     overflow: hidden;
+    margin-left: 12rem;
   }
   
   .slide-item {
@@ -10,9 +11,12 @@
   }
   
   .slide-image {
-    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
     height:80vh;     /* Optional, set height to fill viewport */
-    object-fit: cover; /* Ensures image scales without distortion */
+     /* Ensures image scales without distortion */
     border-radius: 10px;
   }
   

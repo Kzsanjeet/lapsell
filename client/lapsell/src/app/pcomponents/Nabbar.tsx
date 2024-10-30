@@ -19,10 +19,9 @@ const Nabbar = () => {
                 <span className={`ml-3 text-3xl font-semibold font- text-primary ${rubik.className} cursor-pointer`}>LapSell</span>
                 </a>
                 <nav className="md:ml-auto md:mr-auto flex font-semibold flex-wrap items-center text-base justify-center">
-                <Link href={"/products"} className="mr-5 text-xl relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">Products</Link>
-                <Link href={"/latest"} className="mr-5 text-xl relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">Latest</Link>
-                <Link href={"/aboutus"} className="mr-5 text-xl relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">About us</Link>
-                <Link href={"/contactus"} className="mr-5 text-xl relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">Contact us</Link>
+                <Link href={"/Home"} className="mr-5 text-xl relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">Home</Link>
+                <Link href={"/Products"} className="mr-5 text-xl relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">Products</Link>
+                <Link href={"/aboutus"} className="mr-5 text-xl relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">About</Link>
                 </nav>
                 <div className='flex flex-row space-x-5'>
                     <span className='text-2xl text-primary hover:text-accent'><IoSearchSharp/></span>
