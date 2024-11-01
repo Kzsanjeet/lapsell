@@ -1,0 +1,51 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+
+# Build output
+dist/
+build/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Debug and crash files
+*.pid
+*.pid.lock
+
+# IDE and editor files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+.DS_Store
+
+# npm local cache
+.npm
+
+# Yarn local cache
+.yarn/
+
+# Temporary files and folders
+tmp/
+temp/
+
+# Compiled output (for testing or linting)
+coverage/
+nyc_output/
+.jest/
+
+# OS files
+Thumbs.db
+.DS_Store
