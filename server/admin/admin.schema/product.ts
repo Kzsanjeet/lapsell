@@ -3,10 +3,11 @@ import mongoose, { Schema } from "mongoose";
 // Define product schema
 const productSchema = new Schema({
     name: { type: String, required: true },
-    brand: { type: mongoose.Schema.Types.ObjectId, ref: "Brand", required: true }, // Reference to Brand
+    brand: { type: mongoose.Schema.Types.ObjectId, ref: "Brand"}, // Reference to Brand
+    brandname:{type:String, required:true},
     price: { type: Number, required: true },
     newArrival: { type: Boolean, default: true },
-    image: { type: String, required: true },
+    images: { type: [String], required: true },  // store in array if strings for the path
     description: { type: String },
     // computerModel: { type: String, required: true },
     // processor: { type: String, required: true },

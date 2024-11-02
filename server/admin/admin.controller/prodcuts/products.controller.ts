@@ -4,40 +4,47 @@ import { uploadFile } from "../../../utils/cloudinary";
 import brand from "../../admin.schema/brand";
 
 interface MulterRequest extends Request {
-    files?: Express.Multer.File[]; // use File[] for multiple files, File for a single file
+    // file?: Express.Multer.File; // use File for a single file
+    files?: Express.Multer.File[]; // use files for a multiple file
 }
 
 const addProduct = async (req: MulterRequest, res: Response): Promise<void> => {
     try {
-        console.log(req.body)
-        const { name,price,brand, description } = req.body;
-        const images = req.files;
+        console.log(req.body);
+        const { name, price, brandname, description } = req.body;
+        // const images = req.file; // Single file
+        const images = req.files //multiple files
 
-        if (!name || !price || !brand || !description) {
+        if (!name || !price || !brandname || !description) {
             res.status(400).json({ message: "Please fill all the fields correctly" });
-            return; // Ensure we return here to avoid further execution
+            return;
         }
 
         if (!images || images.length === 0) {
-            res.status(400).json({ message: "Please upload images" });
-            return; // Ensure we return here to avoid further execution
+            res.status(400).json({ message: "Please upload an image" });
+            return;
         }
 
-        // Upload each file to Cloudinary and save the URLs
-        const uploadedImages = await Promise.all(
-            images.map((file) => uploadFile(file.path, "lapsell"))
-        );
+        
+        // Upload the file to Cloudinary and get the URL
+        // const uploadedImage = await uploadFile(images.path, "lapsell");
 
-        // Create a new product with the uploaded image URLs
+        const uploadedImages = await Promise.all(
+            images.map((file)=> uploadFile(file.path,"lapsell"))
+        )
+
+         // Map Cloudinary responses to just the URLs
+         const imageUrls = uploadedImages.map((img) => img.url);
+
+        // Create a new product with the uploaded image URL
         const product = await Product.create({
             name,
             price,
-            brand,
-            images: uploadedImages, // Store all image URLs
+            brandname,
+            images: imageUrls, // Store the image URL in an array
             description,
         });
 
-        await product.save();
         res.status(201).json({ message: "Product added successfully", product });
     } catch (error) {
         console.error("Error adding product:", error);
@@ -45,20 +52,22 @@ const addProduct = async (req: MulterRequest, res: Response): Promise<void> => {
     }
 };
 
-const addBrand = async(req:Request,res:Response)=>{
+const addBrand = async (req: Request, res: Response): Promise<void> => {
     try {
-        const {brandname} = req.body;
-        if(!brandname){
-            res.status(400).json({message:"Please fill all the fields correctly"});
+        const { brandname } = req.body;
+        if (!brandname) {
+            res.status(400).json({ message: "Please fill all the fields correctly" });
+            return;
         }
-        const brands = await brand.create({brandname});
-        if(!brands){
-            res.status(404).json({success:false, message:"unable to create brand"})
+        const brands = await brand.create({ brandname });
+        if (!brands) {
+            res.status(404).json({ success: false, message: "Unable to create brand" });
+            return;
         }
-        res.status(200).json({success:true,message:"created successfully",brands})
+        res.status(200).json({ success: true, message: "Created successfully", brands });
     } catch (error) {
         console.error("Error adding brand:", error);
     }
-}
+};
 
-export {addProduct,addBrand};
+export { addProduct, addBrand };
