@@ -11,11 +11,11 @@ interface MulterRequest extends Request {
 const addProduct = async (req: MulterRequest, res: Response): Promise<void> => {
     try {
         console.log(req.body);
-        const { name, price, brandname, description } = req.body;
+        const { name, price, brandname, description, computerModel, processor, chipset, height, width, depth, weight, batteryCapacity, batteryType, displaySize, storage } = req.body;
         // const images = req.file; // Single file
         const images = req.files //multiple files
 
-        if (!name || !price || !brandname || !description) {
+        if (!name || !price || !brandname || !description || !computerModel || !processor || !chipset || !height || !width || !depth || !weight || !batteryCapacity || !batteryType || !displaySize || !storage) {
             res.status(400).json({ message: "Please fill all the fields correctly" });
             return;
         }
@@ -43,6 +43,17 @@ const addProduct = async (req: MulterRequest, res: Response): Promise<void> => {
             brandname,
             images: imageUrls, // Store the image URL in an array
             description,
+            computerModel,
+            processor,
+            chipset,
+            height,
+            width,
+            depth,
+            weight,
+            batteryCapacity,
+            batteryType,
+            displaySize,
+            storage
         });
 
         res.status(201).json({ message: "Product added successfully", product });
