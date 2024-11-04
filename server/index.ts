@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import dbConnection from "../server/admin/dbConnect";
 import  productRouter from "./admin/admin.route/product/route";
+import userRouter from "./admin/admin.route/user/userRoute";
 
 // Load environment variables
 dotenv.config();
@@ -17,6 +18,7 @@ dbConnection();
 app.use(express.json());
 app.use(cookieParser());
 app.use(productRouter)
+app.use(userRouter)
 app.use(
     cors({
         origin: ["http://localhost:3000"],
