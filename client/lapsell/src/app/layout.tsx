@@ -30,7 +30,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        {/* <SidebarProvider>
+          <AdminSidebar/> */}
+          <main>
+            {/* <SidebarTrigger/> */}
+          {children}
+          </main>
+        {/* </SidebarProvider> */}
       </body>
     </html>
   );

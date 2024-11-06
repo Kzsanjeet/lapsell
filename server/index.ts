@@ -16,16 +16,20 @@ const port = process.env.PORT || 4000;
 // Connect to the database
 dbConnection();
 
+app.use(cors({
+    origin:"http://localhost:3000",
+    methods: ['GET,POST,PUT,DELETE,OPTIONS'], // Specify allowed methods
+}))
 app.use(express.json());
 app.use(cookieParser());
-app.use(productRouter)
-app.use(userRouter)
-app.use(
-    cors({
-        origin: ["http://localhost:3000"],
-        // optionsSuccessStatus: 200, // Uncomment if needed for legacy support
-    })
-);
+app.use(productRouter,userRouter)   
+
+// app.use(cors({
+//     origin: 'http://localhost:3000', // Allow requests from this origin
+//     methods: 'GET,POST,PUT,DELETE,OPTIONS', // Specify allowed methods
+//     allowedHeaders: 'Content-Type,Authorization', // Specify allowed headers
+//     credentials: true // If you’re sending cookies or HTTP-only tokens
+//   }));
 
 // Root route
 app.get("/", (req: Request, res: Response) => {

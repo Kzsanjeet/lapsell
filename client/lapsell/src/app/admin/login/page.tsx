@@ -1,3 +1,4 @@
+"use client"
 import Login from '@/app/pcomponents/Login'
 import React from 'react'
 

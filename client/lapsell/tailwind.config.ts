@@ -6,16 +6,16 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+	"./src/**/*.{html,js,jsx,ts,tsx}",
   ],
   theme: {
   	extend: {
   		colors: {
   			background: 'hsl(var(--background))',
-			primary: '#424874',
-			secondary: '#F4EEFF',
-			nabbar: '#DCD6F7',
-			accent: '#A6B1E1',
-			
+  			primary: '#424874',
+  			secondary: '#F4EEFF',
+  			nabbar: '#DCD6F7',
+  			accent: '#A6B1E1',
   			foreground: 'hsl(var(--foreground))',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
@@ -42,6 +42,16 @@ const config: Config = {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
+  			},
+  			sidebar: {
+  				DEFAULT: 'hsl(var(--sidebar-background))',
+  				foreground: 'hsl(var(--sidebar-foreground))',
+  				primary: 'hsl(var(--sidebar-primary))',
+  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+  				accent: 'hsl(var(--sidebar-accent))',
+  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+  				border: 'hsl(var(--sidebar-border))',
+  				ring: 'hsl(var(--sidebar-ring))'
   			}
   		},
   		borderRadius: {
