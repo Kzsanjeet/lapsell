@@ -19,7 +19,8 @@ const Card = () => {
 
   useEffect(() => {
     setProduct(products);
-  }, []);
+  }, [product]);  // if i left the big bracket empty it renders only in the initial 
+                  // if i add product here it means if product updates count effect will run again.
 
   return (
     <div className="p-6">
