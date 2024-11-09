@@ -66,16 +66,19 @@ const addProduct = async (req: MulterRequest, res: Response): Promise<void> => {
 const addBrand = async (req: Request, res: Response): Promise<void> => {
     try {
         const { brandname } = req.body;
-        if (!brandname) {
-            res.status(400).json({ message: "Please fill all the fields correctly" });
+
+        // Check if brandname is provided and is an array
+        if (!brandname || !Array.isArray(brandname) || brandname.length === 0) {
+            res.status(400).json({ message: "Please provide valid brand names." });
             return;
         }
-        const brands = await brand.create({ brandname });
-        if (!brands) {
-            res.status(404).json({ success: false, message: "Unable to create brand" });
-            return;
+        
+        for(const brd in brandname){
+            const brands = await brand.create({brandname:brd})
         }
-        res.status(200).json({ success: true, message: "Created successfully", brands });
+        
+        res.status(200).json(sccucess:true,messaege:"Successful",brands)
+
     } catch (error) {
         console.error("Error adding brand:", error);
     }
