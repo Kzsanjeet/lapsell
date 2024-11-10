@@ -65,20 +65,34 @@ const addProduct = async (req: MulterRequest, res: Response): Promise<void> => {
 
 const addBrand = async (req: Request, res: Response): Promise<void> => {
     try {
+        console.log(req.body)
         const { brandname } = req.body;
-
-        // Check if brandname is provided and is an array
-        if (!brandname || !Array.isArray(brandname) || brandname.length === 0) {
-            res.status(400).json({ message: "Please provide valid brand names." });
+        if (!brandname) {
+            res.status(400).json({ success:false, message: "Unable to get the brandnames" });
             return;
         }
-        
-        for(const brd in brandname){
-            const brands = await brand.create({brandname:brd})
+        const createBrands = []
+        for(const brd of brandname){
+            const brands = await brand.create({brandname: brd})
+            createBrands.push(brands)
         }
-        
-        res.status(200).json(sccucess:true,messaege:"Successful",brands)
+        if(createBrands.length > 0){
+            res.status(201).json({ message: "Brand added successfully", brand: createBrands})
+        }
+        else{
+            res.status(404).json({ success:false, message: "Unable to get the brandnames"})
+        }
+        // await brandname.map((brd:string)=>{
+        //     const brands = brand.create({
+        //         brandname: brd
+        //         })
 
+        //     if(!brands){
+        //         res.status(404).json({ success: false, message: "Unable to create brand" });
+        //         return;
+        //     }
+        //     res.status(200).json({ success: true, message: "Created successfully", brands });
+        // })
     } catch (error) {
         console.error("Error adding brand:", error);
     }

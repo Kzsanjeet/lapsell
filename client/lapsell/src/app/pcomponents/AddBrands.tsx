@@ -15,7 +15,9 @@ const AddBrands = () => {
     updatedBrands[index] = value;
     setBrands(updatedBrands);
   };
-
+  const emptyInputs = () =>{
+    setBrands([''])
+  }
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault(); 
     setLoading(true);
@@ -32,13 +34,14 @@ const AddBrands = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ brands })
+        body: JSON.stringify({ brandname: brands })
       });
 
       const data = await response.json();
 
       if (data.success) {
         toast.success("Brand Added Successfully");
+        emptyInputs()
       } else {
         toast.error(data.message);
         setLoading(false); // Stop loading if request is unsuccessful
@@ -51,6 +54,8 @@ const AddBrands = () => {
       setLoading(false); // Ensure loading is reset when done
     }
   };
+
+  
 
   return (
     <div className="flex flex-col justify-center items-center w-full p-6">
