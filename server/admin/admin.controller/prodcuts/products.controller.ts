@@ -98,4 +98,18 @@ const addBrand = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-export { addProduct, addBrand };
+
+const getAllBrands = async(req:Request,res:Response):Promise<void> =>{
+    try {
+        const getBrands = await brand.find({})
+        if(!getBrands){
+           res.status(404).json({ success: false, message: "Unable to get all the brands"})
+           return
+        }
+        res.status(200).json({success:true, message:"All brands fetched successfully",getBrands})
+    } catch (error) {
+        console.error("Error fetching all brands:", error);
+        res.status(500).json({ message: "Failed to fetch all brands", error: error})
+    }
+}
+export { addProduct, addBrand,getAllBrands };
