@@ -8,6 +8,7 @@ import Link from 'next/link';
 import AdminNav from '../pcomponents/AdminNav';
 import AddBrands from '../pcomponents/AddBrands';
 import AddProducts from '../pcomponents/AddProducts';
+import ProductForm from '../pcomponents/ProductForm';
 
 const Page = () => {
   const [selectMenu, setSelectMenu] = useState<String | null>(null);
@@ -16,7 +17,8 @@ const Page = () => {
     if (selectMenu === 'brands') {
       return <AddBrands />;
     } else if (selectMenu === "products") {
-      return <AddProducts />;
+      // return <AddProducts />;
+      return <ProductForm/> 
     } else {
       return null;
     }

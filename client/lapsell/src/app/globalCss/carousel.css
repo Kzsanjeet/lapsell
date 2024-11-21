@@ -1,9 +1,12 @@
 /* You can add this in your global CSS or component CSS file */
 .slider-container {
-    width: 100%; /* Full width of parent container */
+    width: 80%; /* Full width of parent container */
     max-width: full; /* Prevents overflow */
     overflow: hidden;
     margin-left: 12rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
   }
   
   .slide-item {
@@ -14,7 +17,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80%;
+    width: 100%;
     height:80vh;     /* Optional, set height to fill viewport */
      /* Ensures image scales without distortion */
     border-radius: 10px;

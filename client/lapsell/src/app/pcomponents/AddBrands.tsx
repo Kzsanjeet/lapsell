@@ -1,93 +1,83 @@
 import { Input } from '@/components/ui/input';
-import React, { FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import toast from 'react-hot-toast';
 
 const AddBrands = () => {
   const [loading, setLoading] = useState(false);
-  const [brands, setBrands] = useState(['']);
+  const [brandname, setBrandname] = useState('');
+  const [brandlogo, setBrandlogo] = useState<File | null>(null);
 
-  const addNewBrand = () => {
-    setBrands([...brands, '']);
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null; // Safely extract the first file
+    setBrandlogo(file);
   };
 
-  const handleChange = (index: number, value: string) => {
-    const updatedBrands = [...brands];
-    updatedBrands[index] = value;
-    setBrands(updatedBrands);
-  };
-  const emptyInputs = () =>{
-    setBrands([''])
-  }
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault(); 
+    e.preventDefault();
     setLoading(true);
 
-    try {   
-      if (brands.some((brand) => !brand.trim())) {
-        toast.error("Please fill all the required fields");
-        setLoading(false); // Stop loading if validation fails
-        return;
-      }
+    const submitData = new FormData();
+    submitData.append('brandname', brandname);
 
-      const response = await fetch("http://localhost:4000/admin/add-brand", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ brandname: brands })
+    if (brandlogo) {
+      submitData.append('brandlogo', brandlogo); 
+    }
+
+    try {
+      const response = await fetch('http://localhost:4000/admin/add-brand', {
+        method: 'POST',
+        body: submitData, // Pass FormData directly
       });
 
       const data = await response.json();
 
       if (data.success) {
-        toast.success("Brand Added Successfully");
-        emptyInputs()
+        toast.success('Brand Added Successfully');
+        setBrandname(''); // Reset the brand name field
+        setBrandlogo(null); // Reset the file input
       } else {
-        toast.error(data.message);
-        setLoading(false); // Stop loading if request is unsuccessful
+        toast.error(data.message || 'Failed to add brand');
       }
     } catch (error) {
-      toast.error("An error occurred. Please try again.");
-      console.error("Submission error:", error);
-      setLoading(false); // Stop loading if an error is caught
+      toast.error('An error occurred. Please try again.');
+      console.error('Submission error:', error);
     } finally {
-      setLoading(false); // Ensure loading is reset when done
+      setLoading(false);
     }
   };
-
-  
 
   return (
     <div className="flex flex-col justify-center items-center w-full p-6">
       <h1 className="text-primary font-bold text-2xl mb-4">Add Brands</h1>
       <div className="w-2/4">
         <form onSubmit={handleSubmit}>
-          {brands.map((brand, index) => (
-            <div key={index} className="mb-4">
-              <label className="block mb-1">{`Enter your Brand name ${index + 1}: `}</label>
-              <Input 
-                type="text" 
-                placeholder="Your brand..." 
-                value={brand}
-                onChange={(e) => handleChange(index, e.target.value)}
-              />
-            </div>
-          ))}
-
-          <button
-            type="button"
-            onClick={addNewBrand}
-            className="w-full bg-blue-500 text-white py-2 rounded-lg mt-4 hover:bg-blue-600 transition-all"
-          >
-            Add New
-          </button>
-
+          <div className="mb-4">
+            <label className="block mb-1">Enter your Brand name:</label>
+            <Input
+              type="text"
+              name="brandname"
+              placeholder="Your brand..."
+              value={brandname}
+              onChange={(e) => setBrandname(e.target.value)}
+            />
+            <label htmlFor="brandlogo" className="block mt-2">
+              Choose a brand logo:
+            </label>
+            <input
+              type="file"
+              id="brandlogo"
+              name="brandlogo"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="mt-1"
+            />
+          </div>
           <button
             type="submit"
             className="w-full bg-green-500 text-white py-2 rounded-lg mt-4 hover:bg-green-600 transition-all"
             disabled={loading}
           >
-            {loading ? "Submitting..." : "Submit"}
+            {loading ? 'Submitting...' : 'Submit'}
           </button>
         </form>
       </div>

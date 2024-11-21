@@ -5,6 +5,7 @@ import products from "../data/products.json";
 
 
 interface Product {
+  
   id: number;
   title: string;
   category: string;

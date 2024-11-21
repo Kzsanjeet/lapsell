@@ -1,15 +1,56 @@
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import "../globalCss/category.css"
+import Link from 'next/link'
+
+interface myBrands{
+  _id: number,
+  brandname: string,
+  brandlogo: string,
+}
 
 const Category = () => {
+  // const [page,setPage] = useState(0)
+  const [brands, setBrands] = useState<myBrands[]>([])
+
+  const getAllBrands = async() =>{
+    const getBrand = await fetch("http://localhost:4000/admin/get-all-brands",{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      } 
+    })
+    const brands = await getBrand.json()
+    if(brands.success){
+      setBrands(brands.getBrands)
+    }else{
+      console.log(brands.error)
+    }
+}
+
+  // const handleChange = () =>{
+  //   setPage(page + 1)
+  // }
+
+  // const testFunction = () =>{
+  //   console.log("My page is" + page)
+  // }
+
+  useEffect(()=>{
+    getAllBrands()
+    // testFunction()
+  },[])
   return (
     <div>
-      <div className='flex m-2'>
-        <div className='image-container'>
-            <img className='image' src="https://static-ecapac.acer.com/media/catalog/product/a/c/acer-swift-go-14-sfg14-73-with-fingerprint-with-backlit-wp-logo-frost-blue-01-custom_nx.ku7sm.001_nx.ku7sn.007_1.jpg?optimize=high&bg-color=255,255,255&fit=bounds&height=500&width=500&canvas=500:500" alt="" />
-            <button className='overlay-button font-bold'>Accer</button>
-        </div>
+      <div className='flex flex-wrap'>
+        {brands.map((brand, index) => (
+          <div className='image-container' key={index}>
+            <img className='image' src={brand.brandlogo} alt="" />
+            <Link href={`/brand/${brand._id}`} className='overlay-button font-bold'>{brand.brandname}</Link>
+          </div>
+        ))}
       </div>
+      {/* <button onClick={handleChange}>Click</button> */}
     </div>
   )
 }

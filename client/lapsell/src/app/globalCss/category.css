@@ -3,6 +3,10 @@
     height: 350px;
     position: relative; /* Enables absolute positioning for the button */
     overflow: hidden;    /* Ensures button stays within bounds if adjusted */
+    margin : 10px 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .image {
@@ -29,6 +33,8 @@
     cursor: pointer;
     z-index: 1;          /* Ensures button stays on top of the image */
     width: 7rem;
+    display: flex;
+    justify-content: center;
 }
 
 .overlay-button {

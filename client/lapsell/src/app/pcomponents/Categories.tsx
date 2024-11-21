@@ -3,19 +3,12 @@ import Category from './Category'
 
 const Categories = () => {
   return (
-    <div className='text-primary flex flex-col justify-center items-center mt-20'>
+    <div className='text-primary flex flex-col justify-center items-center mt-20 w-4/5 ml-48'>
         <div className='flex flex-col justify-center items-center'>
             <h1 className='font-bold text-4xl'>Shop by Categories</h1>
             <p className='text-gray-500 p-2 pb-10'>Choose from wide range of categories</p>      
         </div>
-        <div className="flex flex-row flex-wrap justify-center w-10/12">
-            <Category />
-            <Category />
-            <Category />
-            <Category />
-            <Category />
-            <Category />
-            <Category />
+        <div className="flex flex-wrap justify-center items-center">
             <Category />
         </div>
 

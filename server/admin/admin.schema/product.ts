@@ -1,11 +1,10 @@
 import mongoose, { Schema } from "mongoose";
-import brand from "./brand";
 
 // Define product schema
 const productSchema = new Schema({
     name: { type: String, required: true },
-    brand: { type: mongoose.Schema.Types.ObjectId, ref: "brand"}, // Reference to brand
-    brandname:{type:String, required:true},
+    brand: { type: mongoose.Schema.Types.ObjectId, ref: "Brand"}, // Reference to brand
+    brandname:{type:String},
     price: { type: Number, required: true },
     newArrival: { type: Boolean, default: true },   
     images: { type: [String], required: true },  // store in array of strings for the path
@@ -20,7 +19,9 @@ const productSchema = new Schema({
     batteryCapacity: { type: String, required: true },
     batteryType: { type: String, required: true },
     displaySize: { type: String, required: true },
-    storage: { type: String, required: true }
+    storage: { type: String, required: true },
+    
+    productViews: {type:Number, default:0}
 });
 
 // Create model

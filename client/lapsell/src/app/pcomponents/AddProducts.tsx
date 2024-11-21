@@ -4,25 +4,25 @@ import React, { FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { z } from "zod";
 
-// Define Zod schema
-const productSchema = z.object({
-  productName: z.string().nonempty("Product name is required"),
-  price: z.preprocess((val) => Number(val), z.number().positive("Price must be a positive number")),
-  computerModel: z.string().nonempty("Computer model is required"),
-  processor: z.string().nonempty("Processor is required"),
-  chipset: z.string().nonempty("Chipset is required"),
-  width: z.string().nonempty("Width is required"),
-  height: z.string().nonempty("Height is required"),
-  depth: z.string().nonempty("Depth is required"),
-  weight: z.string().nonempty("Weight is required"),
-  batteryCapacity: z.string().nonempty("Battery capacity is required"),
-  batteryType: z.string().nonempty("Battery type is required"),
-  displaySize: z.string().nonempty("Display size is required"),
-  storage: z.string().nonempty("Storage is required"),
-  description: z.string().min(10, "Description must be at least 10 characters"),
-  brand: z.string().nonempty("Brand is required"),
-  image: z.string().nonempty("Image is required"), // Add validation for image
-});
+// // Define Zod schema
+// const productSchema = z.object({
+//   productName: z.string().nonempty("Product name is required"),
+//   price: z.preprocess((val) => Number(val), z.number().positive("Price must be a positive number")),
+//   computerModel: z.string().nonempty("Computer model is required"),
+//   processor: z.string().nonempty("Processor is required"),
+//   chipset: z.string().nonempty("Chipset is required"),
+//   width: z.string().nonempty("Width is required"),
+//   height: z.string().nonempty("Height is required"),
+//   depth: z.string().nonempty("Depth is required"),
+//   weight: z.string().nonempty("Weight is required"),
+//   batteryCapacity: z.string().nonempty("Battery capacity is required"),
+//   batteryType: z.string().nonempty("Battery type is required"),
+//   displaySize: z.string().nonempty("Display size is required"),
+//   storage: z.string().nonempty("Storage is required"),
+//   description: z.string().min(10, "Description must be at least 10 characters"),
+//   brand: z.string().nonempty("Brand is required"),
+//   // image: z.string().nonempty("Image is required"), // Add validation for image
+// });
 
 interface myBrands {
   _id: string;
@@ -73,6 +73,27 @@ const AddProducts = () => {
     }
   };
 
+  const handleAutoFill = () =>{
+     setFormData({
+          productName: "Apple",
+          price: "3212321",
+          computerModel: "212",
+          processor: "2322",
+          chipset: "222",
+          width: "22",
+          height: "22",
+          depth: "22",
+          weight: "22",
+          batteryCapacity: "22",
+          batteryType: "222",
+          displaySize: "22",
+          storage: "222",
+          description: "222",
+          brand: "222",
+          image: "AA", // Reset the image field
+        });
+  }
+
   const getBrands = async () => {
     try {
       const fetchBrands = await fetch("http://localhost:4000/admin/get-all-brands", {
@@ -97,21 +118,21 @@ const AddProducts = () => {
   const fetchData = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
+    console.log(formData)
     // Validate form data with Zod
-    const result = productSchema.safeParse(formData);
+    // const result = productSchema.safeParse(formData);
 
-    if (!result.success) {
-      // Collect errors
-      const validationErrors: { [key: string]: string } = {};
-      result.error.errors.forEach((err) => {
-        validationErrors[err.path[0] as string] = err.message;
-      });
-      setErrors(validationErrors);
-      setLoading(false);
-      toast.error("Please fix the errors in the form.");
-      return;
-    }
+    // if (!result.success) {
+    //   // Collect errors
+    //   const validationErrors: { [key: string]: string } = {};
+    //   result.error.errors.forEach((err) => {
+    //     validationErrors[err.path[0] as string] = err.message;
+    //   });
+    //   setErrors(validationErrors);
+    //   setLoading(false);
+    //   toast.error("Please fix the errors in the form.");
+    //   return;
+    // }
 
     // Create FormData to include image
     const formDataToSend = new FormData();
@@ -128,6 +149,7 @@ const AddProducts = () => {
       });
       const data = await response.json();
       if (data.success) {
+        alert("Added successfully")
         toast.success("Product added successfully");
         setFormData({
           productName: "",
@@ -377,7 +399,6 @@ const AddProducts = () => {
               />
               {errors.image && <p className="text-red-500">{errors.image}</p>}
             </div>
-
             <button
               type="submit"
               className="w-full bg-primary text-white py-2 rounded mt-6"
@@ -386,6 +407,7 @@ const AddProducts = () => {
               {loading ? "Adding..." : "Add Product"}
             </button>
           </form>
+          <button onClick={handleAutoFill}>Autofill</button>
         </div>
       </div>
     </div>
