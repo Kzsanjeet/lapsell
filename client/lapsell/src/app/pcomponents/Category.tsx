@@ -45,8 +45,9 @@ const Category = () => {
       <div className='flex flex-wrap'>
         {brands.map((brand, index) => (
           <div className='image-container' key={index}>
+            <Link href={`/brand/${brand._id}`}>
             <img className='image' src={brand.brandlogo} alt="" />
-            <Link href={`/brand/${brand._id}`} className='overlay-button font-bold'>{brand.brandname}</Link>
+            </Link>
           </div>
         ))}
       </div>

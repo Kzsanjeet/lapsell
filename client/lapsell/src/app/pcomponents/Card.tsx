@@ -34,7 +34,7 @@ const Card = () => {
         {product.map((prod) => (
           <div
             key={prod.id}
-            className="box-glow p-6 bg-secondary rounded-lg w-1/5 hover:shadow-primary transition-shadow duration-300 cursor-pointer"
+            className="box-glow p-6 bg-gray-200 rounded-lg w-1/5 transition-shadow duration-300 cursor-pointer"
           >
             <div className="relative overflow-hidden rounded-md mb-4">
               {prod.isNew && (

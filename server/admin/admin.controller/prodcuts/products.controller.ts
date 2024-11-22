@@ -1,6 +1,7 @@
 import Product from "../../admin.schema/product";
 import { Request, Response } from "express";
 import { uploadFile } from "../../../utils/cloudinary";
+import Brand from "../../admin.schema/brand";
 
 interface MulterRequest extends Request {
     // file?: Express.Multer.File; // use File for a single file
@@ -40,6 +41,8 @@ const addProduct = async (req: MulterRequest, res: Response): Promise<void> => {
          // Map Cloudinary responses to just the URLs
          const imageUrls = uploadedImages.map((img) => img.url);
 
+       
+
         // Create a new product with the uploaded image URL
         const product = await Product.create({
             name:productName,
@@ -60,6 +63,14 @@ const addProduct = async (req: MulterRequest, res: Response): Promise<void> => {
             storage,
         });
 
+        const brandDetails = await Brand.findById(brand); // Query Brand model by ID
+        if (!brandDetails) {
+            res.status(400).json({ message: "Brand not found" });
+            return;
+        }
+        product.brandname = brandDetails.brandname; // Assign brand name to product's brandname field
+        await product.save();
+        
         // console.log(product)
 
         res.status(201).json({ success:true, message: "Product added successfully", product });

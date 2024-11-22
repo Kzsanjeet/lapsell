@@ -11,7 +11,7 @@ import Review from './pcomponents/Review'
 
 const page = () => {
   return (
-    <div className='bg-gray-100'>
+    <div className='bg-gray-100 w-full'>
       <Nabbar/>
       <Carousel/>
       <Categories/>
