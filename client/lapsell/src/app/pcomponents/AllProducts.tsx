@@ -7,7 +7,7 @@ import SingleProductCard from "./SingleProductCard";
 interface Product {
   _id: string;
   name: string;
-  brandname: string;
+  brand: {brandname:string}
   price: number;
   images: string[];
   newArrival: boolean;
@@ -29,11 +29,12 @@ const AllProducts = () => {
         const productsData = response.data.data;
         setProducts(productsData);
         setFilteredProducts(productsData);
-
+console.log(productsData)
         // Extract unique brand names
-        const uniqueBrands = Array.from(
-          new Set(productsData.map((product: Product) => product.brandname))
+        const uniqueBrands:any = Array.from(
+          new Set(productsData?.map((product: Product) => product?.brand?.brandname))
         );
+
         setBrands(uniqueBrands);
       }
       setLoading(false);
@@ -48,7 +49,7 @@ const AllProducts = () => {
     if (brand === "all") {
       setFilteredProducts(products);
     } else {
-      setFilteredProducts(products.filter((product) => product.brandname === brand));
+      setFilteredProducts(products.filter((product) => product.brand.brandname === brand));
     }
   };
 
