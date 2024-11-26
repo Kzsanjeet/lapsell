@@ -26,19 +26,19 @@ const Card = () => {
   return (
     <div className="p-6">
       <div className="text-center mt-20 mb-5">
-        <h1 className="text-4xl font-bold text-primary">Popular Products</h1>
-        <p className="text-gray-600">Check out our most popular products</p>
+        <h1 className="text-4xl font-bold text-black">Popular Products</h1>
+        <p className="text-">Check out our most popular products</p>
       </div>
 
       <div className="flex flex-wrap w-full gap-4 justify-center">
         {product.map((prod) => (
           <div
             key={prod.id}
-            className="box-glow p-6 bg-gray-200 rounded-lg w-1/5 transition-shadow duration-300 cursor-pointer"
+            className="box-glow p-6 bg-white rounded-lg w-1/5 transition-shadow duration-300 cursor-pointer"
           >
             <div className="relative overflow-hidden rounded-md mb-4">
               {prod.isNew && (
-                <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold py-1 px-3 rounded-full z-10">
+                <span className="absolute top-2 left-2 bg-nabbar text-white text-xs font-semibold py-1 px-3 rounded-full z-10">
                   New
                 </span>
               )}
@@ -52,7 +52,7 @@ const Card = () => {
             </div>
             <div className="flex justify-between items-center mt-2">
               <div>
-                <h2 className="text-lg font-semibold text-primary">{prod.title}</h2>
+                <h2 className="text-lg font-semibold text-black">{prod.title}</h2>
                 <p className="text-primary">{prod.category}</p>
               </div>
               <div className="text-right">

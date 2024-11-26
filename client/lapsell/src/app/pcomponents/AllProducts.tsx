@@ -3,6 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import SingleProductCard from "./SingleProductCard";
+import Loader from "./Loader";
 
 interface Product {
   _id: string;
@@ -20,6 +21,8 @@ const AllProducts = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [brands, setBrands] = useState<string[]>([]);
   const [selectedBrand, setSelectedBrand] = useState<string>("all");
+  const [selectedPrice, setSelectedPrice] = useState<number>(0);
+  const [prices, setPrices] = useState<number[]>([]); // Array to store unique prices
 
   const getProductHandler = async () => {
     try {
@@ -29,13 +32,18 @@ const AllProducts = () => {
         const productsData = response.data.data;
         setProducts(productsData);
         setFilteredProducts(productsData);
-console.log(productsData)
+
         // Extract unique brand names
         const uniqueBrands:any = Array.from(
-          new Set(productsData?.map((product: Product) => product?.brand?.brandname))
+          new Set(productsData.map((product: Product) => product.brand.brandname))
         );
-
         setBrands(uniqueBrands);
+
+        // Extract unique prices
+        const uniquePrices:any = Array.from(
+          new Set(productsData.map((product: Product) => product.price))
+        );
+        setPrices(uniquePrices);
       }
       setLoading(false);
     } catch (error) {
@@ -53,9 +61,21 @@ console.log(productsData)
     }
   };
 
+  const handlePriceFilter = (price: string) => {
+    const parsedPrice = parseFloat(price); // Convert string to number
+    setSelectedPrice(parsedPrice);
+    if (parsedPrice === 0) {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(products.filter((product) => product.price === parsedPrice));
+    }
+  };
+
   useEffect(() => {
     getProductHandler();
   }, []);
+
+  if (loading) return <Loader />;
 
   return (
     <div className="flex relative">
@@ -79,10 +99,27 @@ console.log(productsData)
             ))}
           </select>
         </div>
+
+        {/* Price Filter */}
+        <div className="mb-6">
+          <h3 className="text-md font-semibold text-gray-700 mb-2">Price</h3>
+          <select
+            className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-primary focus:outline-none"
+            value={selectedPrice.toString()} // Convert number to string for binding
+            onChange={(e) => handlePriceFilter(e.target.value)}
+          >
+            <option value="0">All Prices</option>
+            {prices.map((price, index) => (
+              <option key={index} value={price}>
+                {price}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {/* Products Container */}
-      <div className="bg-gray-100 w-5/6 ml-auto pl-6 pt-32 pr-6">
+      <div className="bg-gray-100 h-screen w-5/6 ml-auto pl-6 pt-32 pr-6">
         <h1 className="flex text-2xl font-semibold items-center justify-center mt-6">All Products</h1>
         {loading && <h1>Products Loading, Please Wait</h1>}
         {!loading && (
@@ -106,5 +143,8 @@ console.log(productsData)
     </div>
   );
 };
+
+
+
 
 export default AllProducts;

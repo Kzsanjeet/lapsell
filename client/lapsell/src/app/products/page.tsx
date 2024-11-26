@@ -4,10 +4,10 @@ import AllProducts from '../pcomponents/AllProducts'
 
 const page = () => {
   return (
-   <>
+   <div className='bg-secondary'>
    <Nabbar/>
    <AllProducts/>
-   </>
+   </div>
   )
 }
 

@@ -73,7 +73,7 @@ const BrandCard = () => {
   return (
     <div>
         <div className="p-6">
-        <div className="text-center mt-20 mb-5">
+        <div className="text-center mt-20 mb-5 py-28">
             <h1 className="text-4xl font-bold text-primary"></h1>
             <p className="text-gray-600">Check out our most popular products</p>
         </div>

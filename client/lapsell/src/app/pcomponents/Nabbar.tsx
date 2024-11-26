@@ -13,19 +13,19 @@ const rubik = Rubik_Wet_Paint({
 const Nabbar = () => {
   return (
     <div className='fixed top-0 left-0  z-20 w-full'>
-        <header className="text-primary body-font py-4 bg-gray-200 font-serif relative">
+        <header className="text-white body-font py-4 bg-nabbar font-serif relative">
             <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
                 <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-                <span className={`ml-3 text-3xl font-semibold font- text-primary ${rubik.className} cursor-pointer`}>LapSell</span>
+                <span className={`ml-3 text-3xl font-semibold font- text-white ${rubik.className} cursor-pointer`}>LapSell</span>
                 </a>
                 <nav className="md:ml-auto md:mr-auto flex font-semibold flex-wrap items-center text-base justify-center">
-                <Link href={"/"} className="mr-5 text-xl relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">Home</Link>
-                <Link href={"/products"} className="mr-5 text-xl relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">Products</Link>
-                <Link href={"/about-us"} className="mr-5 text-xl relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">About</Link>
+                <Link href={"/"} className="mr-5 text-xl relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 hover:text-orange-200">Home</Link>
+                <Link href={"/products"} className="mr-5 text-xl relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 hover:text-orange-200">Products</Link>
+                <Link href={"/about-us"} className="mr-5 text-xl relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-current after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 hover:text-orange-200">About</Link>
                 </nav>
                 <div className='flex flex-row space-x-5'>
-                    <span className='text-2xl text-primary hover:text-accent'><IoSearchSharp/></span>
-                    <span className='text-2xl text-primary hover:text-accent'><GrCart/></span>
+                    <span className='text-2xl text-white hover:text-orange-300'><IoSearchSharp/></span>
+                    <span className='text-2xl text-white hover:text-orange-300'><GrCart/></span>
                 </div>
             </div>
         </header>
