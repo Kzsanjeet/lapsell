@@ -28,6 +28,7 @@ const Category = () => {
     }
 }
 
+console.log(brands)
   // const handleChange = () =>{
   //   setPage(page + 1)
   // }

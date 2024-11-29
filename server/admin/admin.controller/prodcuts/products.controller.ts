@@ -2,6 +2,7 @@ import Product from "../../admin.schema/product";
 import { Request, Response } from "express";
 import { uploadFile } from "../../../utils/cloudinary";
 import Brand from "../../admin.schema/brand";
+import { get } from "http";
 
 interface MulterRequest extends Request {
     // file?: Express.Multer.File; // use File for a single file
@@ -159,4 +160,31 @@ const getSingleProduct = async(req:Request, res:Response)=>{
     }
 }
 
-export { addProduct,getAllProducts, getSingleProduct};
+const getProductsByBrands  = async(req:Request,res:Response)=>{
+    try {
+        const brandId = req.params.brandId;
+        // const brandId = '673edb6529c78dcd76b7d494'
+        if(!brandId){
+            res.status(404).json({success:false, message: "Brand id is required"})
+        }
+        const testProducts = await Product.find({})
+        console.log(testProducts)
+        console.log(brandId)
+        console.log(typeof(brandId))
+
+        const getProducts = await Product.find({brand:brandId})
+
+        if(!getProducts){
+            res.status(404).json({success:false, message: "Unable to get the products by brands"})
+            }
+            res.status(200).json({success:true, message:"Products by brands fetched successfully",data:getProducts})
+    } catch (error) {
+        console.error("Error fetching products by brands:",error);
+    }
+}
+
+
+
+
+
+export { addProduct,getAllProducts, getSingleProduct, getProductsByBrands};

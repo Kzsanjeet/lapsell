@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import {addProduct,getAllProducts, getSingleProduct} from "../../admin.controller/prodcuts/products.controller";
+import {addProduct,getAllProducts, getProductsByBrands, getSingleProduct} from "../../admin.controller/prodcuts/products.controller";
 import { addBrands, getAllBrands } from "../../admin.controller/prodcuts/brands";
 import filterByBrands from "../../../filter/filterController/brandFilter";
 
@@ -14,6 +14,7 @@ productRouter.route("/admin/get-all-brands").get(getAllBrands)
 productRouter.route("/products/all-products").get(getAllProducts)
 productRouter.get("/product/get-single-product/:id", getSingleProduct)
 productRouter.route("/brand").get(filterByBrands)
+productRouter.route("/get-product-by-brand/:brandId").get(getProductsByBrands)
 
 export default productRouter;
 

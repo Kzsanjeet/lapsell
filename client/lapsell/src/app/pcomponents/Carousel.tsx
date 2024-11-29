@@ -33,7 +33,7 @@ function Carousel() {
     pauseOnHover: true 
   };
   return (
-    <div className="slider-container pt-28">
+    <div className="slider-container pt-24">
       <Slider {...settings}>
         {data.map((images) => (
           <div key={images.id} className="slide-item">

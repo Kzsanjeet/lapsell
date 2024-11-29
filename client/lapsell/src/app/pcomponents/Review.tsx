@@ -5,12 +5,12 @@ import "../globalCss/category.css"
 
 const Review = () => {
   return (
-    <div className='flex flex-col justify-center items-center bg-gray-50'>
+    <div className='flex flex-col justify-center items-center bg-secondary'>
         <div className='flex flex-col justify-center mt-20 items-center'>
                 <p className='text-gray-600'>500+ people recommend us at Instagram</p>
-                <h1 className='text-primary text-5xl font-bold'>Have a look at what our customers say</h1>
+                <h1 className='text-black text-5xl font-bold'>Have a look at what our customers say</h1>
         </div>
-        <section className="text-gray-600 body-font h-full">
+        <section className="text-black body-font h-full">
             <div className="container px-5 pt-14 pb-20 mx-auto">
                 <div className="flex flex-wrap">
                 <div className="p-4 lg:w-1/3">

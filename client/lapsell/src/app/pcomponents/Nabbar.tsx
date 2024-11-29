@@ -13,7 +13,7 @@ const rubik = Rubik_Wet_Paint({
 const Nabbar = () => {
   return (
     <div className='fixed top-0 left-0  z-20 w-full'>
-        <header className="text-white body-font py-4 bg-nabbar font-serif relative">
+        <header className="text-white body-font py-2 bg-nabbar font-serif relative">
             <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
                 <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
                 <span className={`ml-3 text-3xl font-semibold font- text-white ${rubik.className} cursor-pointer`}>LapSell</span>
