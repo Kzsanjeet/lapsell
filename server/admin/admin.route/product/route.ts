@@ -3,6 +3,8 @@ import multer from "multer";
 import {addProduct,getAllProducts, getProductsByBrands, getSingleProduct} from "../../admin.controller/prodcuts/products.controller";
 import { addBrands, getAllBrands } from "../../admin.controller/prodcuts/brands";
 import filterByBrands from "../../../filter/filterController/brandFilter";
+import searchProducts from "../../../controller/search.controller/search";
+// import searchProducts from "../../../controller/search.controller/search";
 
 const upload = multer({ storage: multer.diskStorage({}) });
 const productRouter = express.Router();
@@ -15,6 +17,10 @@ productRouter.route("/products/all-products").get(getAllProducts)
 productRouter.get("/product/get-single-product/:id", getSingleProduct)
 productRouter.route("/brand").get(filterByBrands)
 productRouter.route("/get-product-by-brand/:brandId").get(getProductsByBrands)
+
+//search route
+// productRouter.route("/product").get(searchProducts)
+productRouter.route("/products").get(searchProducts)
 
 export default productRouter;
 
