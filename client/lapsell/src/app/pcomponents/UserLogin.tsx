@@ -1,29 +1,15 @@
 "use client";
+import React from 'react'
 
-import React from "react";
 
-const UserSignup = () => {
+const UserLogin = () => {
   return (
-    <div className="min-h-56 bg-white flex items-center justify-center px-4">
+    <div className="min-h-60 bg-white flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-8">
         <h1 className="text-3xl font-bold text-center text-[#F85606] mb-6">
-          Create Your Account
+          Welcome Back
         </h1>
         <form>
-          <div className="mb-5">
-            <label
-              htmlFor="fullName"
-              className="block text-sm font-medium text-[#F85606]"
-            >
-              Full Name
-            </label>
-            <input
-              type="text"
-              id="fullName"
-              placeholder="Enter your full name"
-              className="w-full mt-2 p-3 border border-[#F85606] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F85606] placeholder-gray-500"
-            />
-          </div>
           <div className="mb-5">
             <label
               htmlFor="email"
@@ -35,20 +21,6 @@ const UserSignup = () => {
               type="email"
               id="email"
               placeholder="Enter your email"
-              className="w-full mt-2 p-3 border border-[#F85606] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F85606] placeholder-gray-500"
-            />
-          </div>
-          <div className="mb-5">
-            <label
-              htmlFor="phone"
-              className="block text-sm font-medium text-[#F85606]"
-            >
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              placeholder="Enter your phone number"
               className="w-full mt-2 p-3 border border-[#F85606] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F85606] placeholder-gray-500"
             />
           </div>
@@ -70,7 +42,7 @@ const UserSignup = () => {
             type="submit"
             className="w-full bg-[#F85606] text-white py-3 rounded-lg font-semibold text-lg hover:bg-opacity-90 transition"
           >
-            Sign Up
+            Login
           </button>
         </form>
         <div className="my-6 flex items-center justify-center">
@@ -90,12 +62,12 @@ const UserSignup = () => {
           Continue with Google
         </button>
         <p className="mt-6 text-center text-sm text-[#F85606]">
-          Already have an account?{" "}
+          Don’t have an account?{" "}
           <a
-            href="/login"
+            href="/signup"
             className="font-bold underline hover:opacity-80 transition"
           >
-            Login
+            Sign Up
           </a>
         </p>
       </div>
@@ -103,4 +75,4 @@ const UserSignup = () => {
   );
 };
 
-export default UserSignup;
+export default UserLogin
