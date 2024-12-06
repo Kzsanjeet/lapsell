@@ -5,6 +5,8 @@ import cors from "cors";
 import dbConnection from "../server/admin/dbConnect";
 import  productRouter from "./admin/admin.route/product/route";
 import userRouter from "./admin/admin.route/user/userRoute";
+import { registerRouter } from "./user/route/register.route";
+import loginUserRouter from "./user/route/login.route";
 
 
 // Load environment variables
@@ -22,7 +24,7 @@ app.use(cors({
 }))
 app.use(express.json());
 app.use(cookieParser());
-app.use(productRouter,userRouter)   
+app.use(productRouter,userRouter,registerRouter,loginUserRouter)   
 
 // app.use(cors({
 //     origin: 'http://localhost:3000', // Allow requests from this origin
