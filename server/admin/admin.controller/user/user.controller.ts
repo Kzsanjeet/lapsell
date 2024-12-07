@@ -54,10 +54,15 @@ const loginUser = async(req:Request,res:Response): Promise<void> =>{
             res.status(404).json({success:false,message:"Invalid password"})
             return
         }
+        
 
         const refreshToken  = jwt.sign({userId: login.id}, process.env.REFRESH_SECRET_KEY as string)
         const accessToken = jwt.sign({userId:login.id}, process.env.ACCESS_SECRET_KEY as string)
 
+        res
+              .status(200)
+              .json({ success: true, message: "Login successful", token: accessToken, token2:refreshToken , data:login});
+              
         if (accessToken && refreshToken) {
             const oneHourInMillis = 60 * 60 * 1000;
             const oneDayInMillis = 24 * 60 * 60 * 1000;
@@ -76,10 +81,6 @@ const loginUser = async(req:Request,res:Response): Promise<void> =>{
             // Set refresh token in user's record
             login.refreshToken = refreshToken; // Assuming the User schema has a 'refreshToken' field
             await login.save()
-            
-            res
-              .status(200)
-              .json({ success: true, message: "Login successful", accessToken, refreshToken });
           }
 
     } catch (error) {

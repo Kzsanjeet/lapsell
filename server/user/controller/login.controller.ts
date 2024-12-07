@@ -63,6 +63,7 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
             message: "Login successful",
             accessToken,
             refreshToken,
+            data:user
         });
     } catch (error) {
         console.error(error);

@@ -24,6 +24,10 @@ const Nabbar = () => {
     router.push(`/search?q=${search}`);
   };
 
+  const handleNull = () =>{
+    setSelect(null)
+  }
+
   const renderModal = () => {
     if (!select) return null;
     return (
@@ -34,9 +38,9 @@ const Nabbar = () => {
             className="absolute top-3 right-3 text-gray-500 hover:text-black"
             onClick={() => setSelect(null)}
           >
-            ✖
+            ✖  
           </button>
-          {select === "signup" && <UserSignup />}
+          {select === "signup" && <UserSignup onSuccessLogin = {handleNull} />}
           {select === "login" && <UserLogin />}
         </div>
       </div>

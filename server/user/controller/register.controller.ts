@@ -4,8 +4,9 @@ import bcrypt from "bcrypt";
 
 const registerUser = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { fullname, email, number, password } = req.body;
 
+        const { fullname, email, number, password } = req.body;
+        
         // Check if all required fields are provided
         if (!fullname || !email || !number || !password) {
             res.status(400).json({
@@ -51,6 +52,8 @@ const registerUser = async (req: Request, res: Response): Promise<void> => {
             message: "User registered successfully",
             data: register,
         });
+
+        
     } catch (error) {
         console.error(error);
         res.status(500).json({

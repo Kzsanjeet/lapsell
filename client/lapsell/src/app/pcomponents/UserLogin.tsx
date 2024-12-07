@@ -1,15 +1,52 @@
 "use client";
-import React from 'react'
+import React, { FormEvent, useState } from 'react'
+import toast from 'react-hot-toast';
 
 
 const UserLogin = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async(e:FormEvent) =>{
+    e.preventDefault()
+    setLoading(true)
+    try {
+      const res = await fetch("http://localhost:4000/user-login",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password
+            })
+      })
+      const data = await res.json()
+      if(data.success){
+        toast.success("Login successful")
+        setLoading(false)
+      }else{
+        alert("Invalid user email or password")
+      }
+    } catch (error) {
+      console.log(error)
+      setError("Something went wrong. Please try again later.");
+    } finally{
+      setLoading(false)
+    }
+  }
+
+
   return (
     <div className="min-h-60 bg-white flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-8">
         <h1 className="text-3xl font-bold text-center text-[#F85606] mb-6">
           Welcome Back
         </h1>
-        <form>
+        <form onSubmit={handleSubmit}>
+          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
           <div className="mb-5">
             <label
               htmlFor="email"
@@ -20,6 +57,8 @@ const UserLogin = () => {
             <input
               type="email"
               id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               className="w-full mt-2 p-3 border border-[#F85606] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F85606] placeholder-gray-500"
             />
@@ -34,15 +73,18 @@ const UserLogin = () => {
             <input
               type="password"
               id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               className="w-full mt-2 p-3 border border-[#F85606] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F85606] placeholder-gray-500"
             />
           </div>
           <button
             type="submit"
+            disabled = {loading}
             className="w-full bg-[#F85606] text-white py-3 rounded-lg font-semibold text-lg hover:bg-opacity-90 transition"
           >
-            Login
+            {loading ? "logging in..": "Log In"}
           </button>
         </form>
         <div className="my-6 flex items-center justify-center">
