@@ -54,7 +54,7 @@ const Description = ({ productId }: DescriptionProps) => {
 
     return (
         <>
-            <div className="py-36 bg-gray-50">
+            <div className="py-36 bg-secondary">
                 <section className="text-gray-600 body-font overflow-hidden">
                     <div className="container mx-auto px-5 py-12">
                         <div className="flex flex-wrap lg:w-4/5 mx-auto bg-white rounded-lg shadow-md overflow-hidden">

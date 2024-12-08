@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { uploadFile } from "../../../utils/cloudinary";
 import Brand from "../../admin.schema/brand";
 import { get } from "http";
+import mongoose from "mongoose";
 
 interface MulterRequest extends Request {
     // file?: Express.Multer.File; // use File for a single file
@@ -160,28 +161,42 @@ const getSingleProduct = async(req:Request, res:Response)=>{
     }
 }
 
-const getProductsByBrands  = async(req:Request,res:Response)=>{
+
+const getProductsByBrands = async (req: Request, res: Response) => {
     try {
         const brandId = req.params.brandId;
-        // const brandId = '673edb6529c78dcd76b7d494'
-        if(!brandId){
-            res.status(404).json({success:false, message: "Brand id is required"})
+
+        // Check if `brandId` is provided
+        if (!brandId) {
+            return res.status(400).json({ success: false, message: "Brand ID is required" });
         }
-        const testProducts = await Product.find({})
-        console.log(testProducts)
-        console.log(brandId)
-        console.log(typeof(brandId))
 
-        const getProducts = await Product.find({brand:brandId})
+        // Validate if `brandId` is a valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(brandId)) {
+            return res.status(400).json({ success: false, message: "Invalid Brand ID format" });
+        }
 
-        if(!getProducts){
-            res.status(404).json({success:false, message: "Unable to get the products by brands"})
-            }
-            res.status(200).json({success:true, message:"Products by brands fetched successfully",data:getProducts})
+        // Query the database for products by the brand ID
+        const getProducts = await Product.find({ brand: brandId });
+
+        if (!getProducts || getProducts.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "No products found for the provided brand ID",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Products by brand fetched successfully",
+            data: getProducts,
+        });
     } catch (error) {
-        console.error("Error fetching products by brands:",error);
+        console.error("Error fetching products by brands:", error);
+        return res.status(500).json({ success: false, message: "Server error" });
     }
-}
+};
+
 
 
 

@@ -1,14 +1,16 @@
 "use client";
 import Link from "next/link";
-import React, { createContext, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { GrCart } from "react-icons/gr";
 import { Rubik_Wet_Paint } from "next/font/google";
 import { IoSearchSharp } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import UserSignup from "./UserSignup";
 import UserLogin from "./UserLogin";
-import { Avatar } from "@/components/ui/avatar";
 import { UserContext}  from "@/provider/SignUpContext";
+import Profile from "./Profile";
+// import Profile from "./ProfilePic";
+// import ProfilePic from "./ProfilePic";
 
 const rubik = Rubik_Wet_Paint({
   weight: "400",
@@ -21,7 +23,8 @@ const Nabbar = () => {
   const [search, setSearch] = useState("");
   const router = useRouter();
   const [select, setSelect] = useState<string | null>(null); // For signup or login modal
-const {isLoggedIn,setIsLoggedIn}=useContext(UserContext)!
+  const {isLoggedIn,setIsLoggedIn}=useContext(UserContext)!
+
   const handleSearchBar = () => {
     router.push(`/search?q=${search}`);
   };
@@ -40,7 +43,7 @@ const {isLoggedIn,setIsLoggedIn}=useContext(UserContext)!
           {select === "signup" && (
             <UserSignup onSuccessLogin={() => setSelect(null)} />
           )}
-          {select === "login" && <UserLogin />}
+          {select === "login" && <UserLogin onSuccessLogin = {()=>setSelect(null)}/>}
         </div>
       </div>
     );
@@ -101,9 +104,7 @@ const {isLoggedIn,setIsLoggedIn}=useContext(UserContext)!
               </div>
               <div className="flex flex-row gap-6 pl-4">
                 {isLoggedIn ? (
-                  <div>
-                    <span className="text-2xl text-white hover:text-orange-300">hello i am balbir</span>
-                  </div>
+                  <Profile/>
                 ) : (
                   <>
                     <h2

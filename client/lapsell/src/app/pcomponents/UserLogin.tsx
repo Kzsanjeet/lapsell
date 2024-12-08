@@ -1,13 +1,15 @@
 "use client";
-import React, { FormEvent, useState } from 'react'
+import { UserContext } from '@/provider/SignUpContext';
+import React, { FormEvent, useContext, useState } from 'react'
 import toast from 'react-hot-toast';
 
 
-const UserLogin = () => {
+const UserLogin = ({ onSuccessLogin }: { onSuccessLogin: () => void }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const {isLoggedIn, setIsLoggedIn} = useContext(UserContext)!
 
   const handleSubmit = async(e:FormEvent) =>{
     e.preventDefault()
@@ -26,6 +28,10 @@ const UserLogin = () => {
       const data = await res.json()
       if(data.success){
         toast.success("Login successful")
+        setIsLoggedIn(true)
+        setTimeout(() => {
+          onSuccessLogin()
+        },1000);
         setLoading(false)
       }else{
         alert("Invalid user email or password")
