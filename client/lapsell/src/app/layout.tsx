@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import SignUpContext from "@/provider/SignUpContext";
 
 
 const geistSans = localFont({
@@ -28,15 +29,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
+      suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* <SidebarProvider>
-          <AdminSidebar/> */}
+        <SignUpContext>
           <main>
-            {/* <SidebarTrigger/> */}
           {children}
           </main>
-        {/* </SidebarProvider> */}
+        </SignUpContext>
+        
       </body>
     </html>
   );

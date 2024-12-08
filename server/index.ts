@@ -21,6 +21,7 @@ dbConnection();
 app.use(cors({
     origin:"http://localhost:3000",
     methods: ['GET,POST,PUT,DELETE,OPTIONS'], // Specify allowed methods
+    credentials: true // Allow sending cookies
 }))
 app.use(express.json());
 app.use(cookieParser());

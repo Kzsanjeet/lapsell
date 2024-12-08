@@ -1,49 +1,53 @@
 "use client";
 
+import { UserContext } from "@/provider/SignUpContext";
 import Link from "next/link";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useContext, useState } from "react";
 import toast from "react-hot-toast";
 
-const UserSignup = ({onSuccessLogin }: { onSuccessLogin: () => void }) => {
-  const[fullName, setFullname] = useState("");
-  const[email, setEmail] = useState("");
-  const[number, setNumber] = useState("");
-  const[password, setPassword] = useState("");
-  const[error, setError] = useState("");
-  const [loading, setLoading] = useState(false)
+// import { UserContext } from "./Nabbar";
 
-  const handleSubmit = async(e:FormEvent) =>{
+const UserSignup = ({ onSuccessLogin }: { onSuccessLogin: () => void }) => {
+  // const { setLoggedIn } = useContext(UserContext);
+  const [fullName, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const {isLoggedIn,setIsLoggedIn} = useContext(UserContext)!
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:4000/user-register', {
-        method: 'POST',
+      const res = await fetch("http://localhost:4000/user-register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            fullname: fullName,
-            email: email,
-            number: number,
-            password: password
-            })
-      })
-      const data = await res.json()
-      if(data.success){
-        alert("success")
-        toast.success("Registered successfully")
-        setLoading(false)
-        onSuccessLogin()
-      }else{
-        alert("Invalid email or user might already exists.")
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullname: fullName,
+          email: email,
+          number: number,
+          password: password,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setIsLoggedIn(true);
+        onSuccessLogin();
+      } else {
+        setError("Invalid email or user already exists.");
       }
     } catch (error) {
       console.error(error);
       setError("Something went wrong. Please try again later.");
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
-  }
+  };
+
 
   return (
     <div className="min-h-56 bg-white flex items-center justify-center px-4">

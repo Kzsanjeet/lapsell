@@ -1,12 +1,14 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { createContext, useState, useContext } from "react";
 import { GrCart } from "react-icons/gr";
 import { Rubik_Wet_Paint } from "next/font/google";
 import { IoSearchSharp } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import UserSignup from "./UserSignup";
 import UserLogin from "./UserLogin";
+import { Avatar } from "@/components/ui/avatar";
+import { UserContext}  from "@/provider/SignUpContext";
 
 const rubik = Rubik_Wet_Paint({
   weight: "400",
@@ -14,33 +16,30 @@ const rubik = Rubik_Wet_Paint({
   display: "swap",
 });
 
+
 const Nabbar = () => {
   const [search, setSearch] = useState("");
   const router = useRouter();
-
   const [select, setSelect] = useState<string | null>(null); // For signup or login modal
-
+const {isLoggedIn,setIsLoggedIn}=useContext(UserContext)!
   const handleSearchBar = () => {
     router.push(`/search?q=${search}`);
   };
 
-  const handleNull = () =>{
-    setSelect(null)
-  }
-
   const renderModal = () => {
     if (!select) return null;
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"> 
-      {/* //opacity makes the bg transparent */}
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
         <div className="bg-white w-full max-w-md rounded-lg shadow-lg p-8 relative">
           <button
             className="absolute top-3 right-3 text-gray-500 hover:text-black"
             onClick={() => setSelect(null)}
           >
-            ✖  
+            ✖
           </button>
-          {select === "signup" && <UserSignup onSuccessLogin = {handleNull} />}
+          {select === "signup" && (
+            <UserSignup onSuccessLogin={() => setSelect(null)} />
+          )}
           {select === "login" && <UserLogin />}
         </div>
       </div>
@@ -101,24 +100,31 @@ const Nabbar = () => {
                 </span>
               </div>
               <div className="flex flex-row gap-6 pl-4">
-                <h2
-                  className="cursor-pointer text-xl"
-                  onClick={() => setSelect("login")}
-                >
-                  Login
-                </h2>
-                <h2
-                  className="cursor-pointer text-xl"
-                  onClick={() => setSelect("signup")}
-                >
-                  Sign Up
-                </h2>
+                {isLoggedIn ? (
+                  <div>
+                    <span className="text-2xl text-white hover:text-orange-300">hello i am balbir</span>
+                  </div>
+                ) : (
+                  <>
+                    <h2
+                      className="cursor-pointer text-xl"
+                      onClick={() => setSelect("login")}
+                    >
+                      Login
+                    </h2>
+                    <h2
+                      className="cursor-pointer text-xl"
+                      onClick={() => setSelect("signup")}
+                    >
+                      Sign Up
+                    </h2>
+                  </>
+                )}
               </div>
             </div>
           </div>
         </div>
       </header>
-
       {renderModal()}
     </div>
   );
