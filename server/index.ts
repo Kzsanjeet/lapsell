@@ -9,6 +9,8 @@ import { registerRouter } from "./user/route/register.route";
 import loginUserRouter from "./user/route/login.route";
 import loginDataRouter from "./user/route/getData";
 import logoutRouter from "./user/route/logout";
+import addCardRouter from "./user/route/addCard";
+import getCardRouter from "./user/route/getCard";
 
 
 // Load environment variables
@@ -27,7 +29,7 @@ app.use(cors({
 }))
 app.use(express.json());
 app.use(cookieParser());
-app.use(productRouter,userRouter,registerRouter,loginUserRouter,loginDataRouter,logoutRouter)   
+app.use(productRouter,userRouter,registerRouter,loginUserRouter,loginDataRouter,logoutRouter,addCardRouter,getCardRouter)   
 
 // app.use(cors({
 //     origin: 'http://localhost:3000', // Allow requests from this origin
