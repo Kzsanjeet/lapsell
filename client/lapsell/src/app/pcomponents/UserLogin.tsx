@@ -19,7 +19,10 @@ const UserLogin = ({ onSuccessLogin }: { onSuccessLogin: () => void }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          },
+          }
+          ,
+          credentials:'include'
+          ,
           body: JSON.stringify({
             email: email,
             password: password
