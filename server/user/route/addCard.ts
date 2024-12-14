@@ -4,6 +4,6 @@ import authenticate from "../../middleware/tokenAuth";
 
 const addCardRouter = express.Router();
 
-addCardRouter.route("/add-card/:productId").post(authenticate,addToCard)
+addCardRouter.route("/product/add-card/:productId").post(authenticate,addToCard)
 
 export default addCardRouter

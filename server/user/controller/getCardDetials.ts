@@ -1,37 +1,41 @@
 import { Request, Response } from "express";
-import AddToCart from "../model/addToCard";
+// import AddToCart from "../model/addToCard";
 import mongoose from "mongoose";
+import MyCart from "../model/myCart";
 
-const getCardDetails = async (req: Request, res: Response): Promise<void> => {
+interface AuthenticatedRequest extends Request {
+  user?: any;
+}
+
+const getCardDetails = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   try {
-    const cardId = req.params.cardId;
+    const userId = req.user?.userId;  
 
-    // Validate cardId
-    if (!cardId || !mongoose.Types.ObjectId.isValid(cardId)) {
-      res.status(400).json({ success: false, message: "Invalid or missing card ID" });
+    // Validate userId
+    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+      res.status(400).json({ success: false, message: "Invalid or missing user ID" });
       return;
     }
 
-    const getCard = await AddToCart.findById(cardId)
-      .populate("user") 
-      .populate("product"); 
+    const getCard = await MyCart.find({ user: userId })
+      .populate("product") // `product` is a reference to the Product model
+      // .select("_id name images price") 
 
-    if (!getCard) {
+    if (getCard.length === 0) {
       res.status(404).json({
         success: false,
-        message: "Card not found or unable to fetch details",
+        message: "No products found in the cart",
       });
       return;
     }
 
-    // Return the populated card details
     res.status(200).json({
       success: true,
-      message: "Fetched card successfully",
+      message: "Fetched cart successfully",
       data: getCard,
     });
   } catch (error) {
-    console.error("Error fetching card details:", error);
+    console.error("Error fetching cart details:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };

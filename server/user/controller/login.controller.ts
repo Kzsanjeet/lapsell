@@ -44,19 +44,21 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
         user.refreshToken = refreshToken;
         await user.save();
 
-        // Set cookies for tokens
         res.cookie("accessToken", accessToken, {
-            httpOnly: true,
-            secure: true, // Use `true` in production
             maxAge: 60 * 60 * 1000, // 1 hour
-        });
-
-        res.cookie("refreshToken", refreshToken, {
-            httpOnly: true,
-            secure: true, // Use `true` in production
+            httpOnly: false, // Allow access from JavaScript
+            secure: false, // Set to `true` in production over HTTPS
+           // SameSite: "Lax", // Optional, depending on your needs
+          });
+          
+          res.cookie("refreshToken", refreshToken, {
             maxAge: 24 * 60 * 60 * 1000, // 1 day
-        });
-
+            httpOnly: false, // Allow access from JavaScript
+            secure: false, // Set to `true` in production over HTTPS
+            //SameSite: "Lax", // Optional
+          });   
+          
+        // localStorage.setItem("Token",accessToken)
         // Send response with tokens
         res.status(200).json({
             success: true,

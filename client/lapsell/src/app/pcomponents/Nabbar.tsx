@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { GrCart } from "react-icons/gr";
 import { Rubik_Wet_Paint } from "next/font/google";
 import { IoSearchSharp } from "react-icons/io5";
@@ -9,6 +9,9 @@ import UserSignup from "./UserSignup";
 import UserLogin from "./UserLogin";
 import { UserContext}  from "@/provider/SignUpContext";
 import Profile from "./Profile";
+import AddToCard from "./AddToCard";
+import Cookies from "js-cookie"
+import { CardContext } from "@/provider/AddToCardContext";
 // import Profile from "./ProfilePic";
 // import ProfilePic from "./ProfilePic";
 
@@ -18,12 +21,58 @@ const rubik = Rubik_Wet_Paint({
   display: "swap",
 });
 
+interface AddCard{
+  userId: string,
+  productId: string,
+  quantity: number
+}
 
 const Nabbar = () => {
   const [search, setSearch] = useState("");
   const router = useRouter();
   const [select, setSelect] = useState<string | null>(null); // For signup or login modal
   const {isLoggedIn,setIsLoggedIn}=useContext(UserContext)!
+  const [card, setCard] = useState<AddCard[]>([]);
+  const [count, setCount] = useState(0);
+  const { cardArray, setCardArray } = useContext(CardContext) || { cardArray: [], setCardArray: () => {} }; // Fallback for safety;
+
+  const getAddCardCount = async () => {
+    try {
+      const accessToken = Cookies.get("accessToken");
+  
+      // Ensure accessToken is available before making the request
+      if (!accessToken) {
+        console.error("Access token is missing");
+        return;
+      }
+  
+      const getCardData = await fetch("http://localhost:4000/user-card-details", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`,
+        },
+      });
+  
+      const data = await getCardData.json();
+  
+      if (data.success && Array.isArray(data.data)) {
+        setCardArray(data.data);  
+        setCount(data.data.length); 
+      } else {
+        console.error("Failed to fetch cart data or invalid response", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching cart data:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      getAddCardCount();
+    }
+  }); // Run only when the login state changes
+  
 
   const handleSearchBar = () => {
     router.push(`/search?q=${search}`);
@@ -48,6 +97,12 @@ const Nabbar = () => {
       </div>
     );
   };
+
+  // const renderCard =() =>{
+  //   if(isLoggedIn){
+  //     return <AddToCard/>
+  //   }
+  // }
 
   return (
     <div className="fixed top-0 left-0 z-20 w-full">
@@ -98,8 +153,14 @@ const Nabbar = () => {
                 </button>
               </div>
               <div>
-                <span className="text-2xl text-white hover:text-orange-300">
-                  <GrCart />
+              <span className="relative text-2xl text-white hover:text-orange-300">
+                  {/* Cart icon with count */}
+                  <AddToCard />
+                  {count > 0 && (
+                    <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-1">
+                      {count}
+                    </span>
+                  )}
                 </span>
               </div>
               <div className="flex flex-row gap-6 pl-4">
@@ -127,6 +188,7 @@ const Nabbar = () => {
         </div>
       </header>
       {renderModal()}
+      {/* {renderCard()} */}
     </div>
   );
 };

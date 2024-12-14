@@ -1,14 +1,16 @@
 "use client";
-
+import { UserContext } from '@/provider/SignUpContext';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useContext, useEffect, useState } from 'react';
 import { FaEye } from "react-icons/fa";
+import Cookies from "js-cookie";
 
 interface DescriptionProps {
     productId: string;
 }
 
 interface Product {
+    _id:string;
     productViews: number;
     name: string;
     brand: string;
@@ -26,8 +28,10 @@ interface Product {
     [key: string]: any;
 }
 
+
 const Description = ({ productId }: DescriptionProps) => {
     const [product, setProduct] = useState<Product | null>(null);
+    const {isLoggedIn, setIsLoggedIn} = useContext(UserContext)!
 
     const getProductHandler = async () => {
         try {
@@ -51,6 +55,33 @@ const Description = ({ productId }: DescriptionProps) => {
     if (!product) {
         return <div className="text-center py-36 text-gray-700">Loading...</div>;
     }
+
+    const handleAddToCard = async () => {
+        try {
+          if (isLoggedIn) {
+            const accessToken = Cookies.get("accessToken");
+            if (!accessToken) {
+              console.error("Access token not found!");
+              return;
+            }
+      
+            const response = await fetch(`http://localhost:4000/product/add-card/${productId}`, {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`, // Pass token in the header
+              },
+            });
+      
+            const data = await response.json();
+            console.log(data);
+          }
+        } catch (error) {
+          console.error("Error adding to cart:", error);
+        }
+      };
+      
 
     return (
         <>
@@ -90,7 +121,9 @@ const Description = ({ productId }: DescriptionProps) => {
                                     <span className="text-2xl font-bold text-gray-900">
                                         NPR {product.price.toLocaleString()}
                                     </span>
-                                    <button className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all">
+                                    <button className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all"
+                                    onClick={handleAddToCard}
+                                    >
                                         Add to Cart
                                     </button>
                                 </div>
