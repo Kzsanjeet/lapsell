@@ -7,14 +7,14 @@ import { IoSearchSharp } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import UserSignup from "./UserSignup";
 import UserLogin from "./UserLogin";
-import { UserContext}  from "@/provider/SignUpContext";
 import Profile from "./Profile";
 import AddToCard from "./AddToCard";
-import Cookies from "js-cookie"
-import { CardContext } from "@/provider/AddToCardContext";
+
+import  { AddCardContext } from "@/provider/AddToCartContext";
+import { LoginUserContext } from "@/provider/SignUpContext";
 // import Profile from "./ProfilePic";
 // import ProfilePic from "./ProfilePic";
-
+import Cookies from "js-cookie";
 const rubik = Rubik_Wet_Paint({
   weight: "400",
   subsets: ["latin"],
@@ -31,47 +31,104 @@ const Nabbar = () => {
   const [search, setSearch] = useState("");
   const router = useRouter();
   const [select, setSelect] = useState<string | null>(null); // For signup or login modal
-  const {isLoggedIn,setIsLoggedIn}=useContext(UserContext)!
   const [card, setCard] = useState<AddCard[]>([]);
   const [count, setCount] = useState(0);
-  const { cardArray, setCardArray } = useContext(CardContext) || { cardArray: [], setCardArray: () => {} }; // Fallback for safety;
+
+
+  const userloginContext = useContext(LoginUserContext)!
+  const {setIsLoggedIn, isLoggedIn} = userloginContext;
+
+  const { cardItem, setCardItem} = useContext(AddCardContext)!
+
+  console.log(cardItem,"carddddd")
+
+  console.log(isLoggedIn, "check login")
+
+  const token = Cookies.get("accessToken")
+  const userId = Cookies.get("userId")
+
+  if(token){
+    setIsLoggedIn(true)
+  }
+
+  // const getAddCardCount = async () => {
+  //   try {
+  //     console.log("calling")
+  
+  //     // Ensure accessToken is available before making the request
+  //     if (!token) {
+  //       console.error("Access token is missing");
+  //       return;
+  //     }
+  
+  //     const getCardData = await fetch(`http://localhost:4000/user-card-details?id=${userId}`, {
+  //       method: "GET",
+        
+  //     });
+  
+  //     const data = await getCardData.json();
+
+  //     console.log(data, "yomari")
+  
+  //     if (data.success && Array.isArray(data.data)) {
+  //       setCardItem(data.data)  
+  //       setCount(data.data.length); 
+  //     } else {
+  //       console.error("Failed to fetch cart data or invalid response", data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching cart data:", error);
+  //   }
+  // };
 
   const getAddCardCount = async () => {
     try {
-      const accessToken = Cookies.get("accessToken");
   
-      // Ensure accessToken is available before making the request
-      if (!accessToken) {
+      // Ensure token and userId are available
+      if (!token) {
         console.error("Access token is missing");
         return;
       }
+      if (!userId) {
+        console.error("User ID is missing");
+        return;
+      }
   
-      const getCardData = await fetch("http://localhost:4000/user-card-details", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${accessToken}`,
-        },
-      });
+      const response = await fetch(
+        `http://localhost:4000/user-card-details?id=${encodeURIComponent(userId)}`, // Sanitize query params
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`, // Add token if the API expects it
+            "Content-Type": "application/json",
+          },
+        }
+      );
   
-      const data = await getCardData.json();
+      // Check if response is okay
+      if (!response.ok) {
+        throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
+      }
   
+      const data = await response.json();
+  
+      // Check success status and data validity
       if (data.success && Array.isArray(data.data)) {
-        setCardArray(data.data);  
-        setCount(data.data.length); 
+        setCardItem(data.data);
+        setCount(data.data.length);
       } else {
-        console.error("Failed to fetch cart data or invalid response", data.message);
+        console.error("Invalid response:", data.message || "Unexpected structure");
       }
     } catch (error) {
       console.error("Error fetching cart data:", error);
     }
   };
-
+  
   useEffect(() => {
-    if (isLoggedIn) {
+    console.log("Updated cardItem:", cardItem);
       getAddCardCount();
-    }
-  }); // Run only when the login state changes
+    
+  },[]);
   
 
   const handleSearchBar = () => {
@@ -157,10 +214,11 @@ const Nabbar = () => {
                   {/* Cart icon with count */}
                   <AddToCard />
                   {count > 0 && (
-                    <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-1">
+                    <span className="absolute top-1/2 right-0 transform translate-x-2 translate-y-2 bg-white text-black text-xs rounded-full px-1 shadow-md">
                       {count}
                     </span>
                   )}
+
                 </span>
               </div>
               <div className="flex flex-row gap-6 pl-4">

@@ -1,19 +1,29 @@
-"use client"
-import React, { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react'
+"use client";
 
-interface contextProps{
-    isLoggedIn:boolean
-    setIsLoggedIn:Dispatch<SetStateAction<boolean>>
+import { createContext, Dispatch, FC, SetStateAction, useState, ReactNode } from "react";
+
+// Define the interface for the context value
+interface LoginUserType {
+  isLoggedIn: boolean;
+  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
 }
-export const UserContext = createContext<contextProps|null>(null)
 
-const SignUpContext = ({children}:{children:ReactNode|ReactNode[]}) => {
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+// Create the context with a default value of `null` for better type safety
+export const LoginUserContext = createContext<LoginUserType | null>(null);
+
+// Define the props for the provider component
+interface LoginUserProviderProps {
+  children: ReactNode; // Properly type the children prop
+}
+
+// Create the LoginUserProvider component
+const LoginUserProvider: FC<LoginUserProviderProps> = ({ children }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
-    <UserContext.Provider value={{isLoggedIn,setIsLoggedIn}}>
+    <LoginUserContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       {children}
-    </UserContext.Provider>
-  )
-}
+    </LoginUserContext.Provider>
+  );
+};
 
-export default SignUpContext
+export { LoginUserProvider };

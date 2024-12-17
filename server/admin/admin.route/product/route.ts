@@ -1,11 +1,15 @@
 import express from "express";
 import multer from "multer";
-import {addProduct,getAllProducts,getSingleProduct} from "../../admin.controller/prodcuts/products.controller";
+import {addProduct,getAllProducts, getSingleProduct} from "../../admin.controller/prodcuts/products.controller";
 import { addBrands, getAllBrands } from "../../admin.controller/prodcuts/brands";
 import filterByBrands from "../../../filter/filterController/brandFilter";
 import searchProducts from "../../../controller/search.controller/search";
 import getProductWithSimilar from "../../../controller/similar.controller/similar.controller";
+import authenticate from "../../../middleware/tokenAuth";
+
 // import searchProducts from "../../../controller/search.controller/search";
+
+
 
 const upload = multer({ storage: multer.diskStorage({}) });
 const productRouter = express.Router();
@@ -15,7 +19,7 @@ productRouter.route("/admin/add-product").post(upload.array("images", 5), addPro
 productRouter.route("/admin/add-brand").post(upload.single("brandlogo"),addBrands)
 productRouter.route("/admin/get-all-brands").get(getAllBrands)
 productRouter.route("/products/all-products").get(getAllProducts)
-productRouter.get("/product/get-single-product/:id", getSingleProduct)
+// productRouter.get("/product/get-single-product/:id", authenticate, getSingleProduct);
 productRouter.route("/brand").get(filterByBrands)
 // productRouter.route("/get-product-by-brand/:brandId").get(getProductsByBrands)
 
@@ -25,6 +29,8 @@ productRouter.route("/products").get(searchProducts)
 
 // for finding the similar products
 productRouter.route("/similar-products/:productId").get(getProductWithSimilar)
+
+productRouter.route("/product/get-single-product/:id").get(getSingleProduct)
 
 export default productRouter;
 

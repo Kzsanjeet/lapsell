@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import MyCart from "../model/myCart";
-// import AddToCart from "../model/addToCard";
 
 interface AuthenticatedRequest extends Request {
   user?: { userId: string }; // Define a stricter type for user
@@ -33,10 +32,11 @@ const addToCart = async (req: AuthenticatedRequest, res: Response): Promise<void
 
     // Check if product is already in the user's cart
     const existingCartItem = await MyCart.findOne({ user: userId, product: productId });
-    console.log(existingCartItem,"test1")
+
     if (existingCartItem) {
       existingCartItem.quantity = quantity; // Update quantity
       await existingCartItem.save();
+
       res.status(200).json({
         success: true,
         message: "Cart updated successfully",
@@ -52,7 +52,6 @@ const addToCart = async (req: AuthenticatedRequest, res: Response): Promise<void
       quantity: quantity,
       });
       await addCart.save();  
-    console.log(addCart,"test2")
 
     // Send success response
     res.status(200).json({

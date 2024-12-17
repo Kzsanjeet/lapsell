@@ -27,6 +27,8 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
+        const userid = user._id
+
         // Generate access and refresh tokens
         const accessToken = jwt.sign(
             { userId: user._id },
@@ -65,7 +67,8 @@ const loginUser = async (req: Request, res: Response): Promise<void> => {
             message: "Login successful",
             accessToken,
             refreshToken,
-            data:user
+            data:user,
+            userId:userid
         });
     } catch (error) {
         console.error(error);

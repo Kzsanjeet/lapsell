@@ -4,6 +4,6 @@ import authenticate from "../../middleware/tokenAuth";
 
 const getCardRouter = express.Router();
 
-getCardRouter.route("/user-card-details").get(authenticate, getCardDetails);
+getCardRouter.route("/user-card-details").get( getCardDetails);
 
 export default getCardRouter

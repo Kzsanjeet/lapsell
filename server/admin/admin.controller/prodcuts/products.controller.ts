@@ -2,13 +2,18 @@ import Product from "../../admin.schema/product";
 import { Request, Response } from "express";
 import { uploadFile } from "../../../utils/cloudinary";
 import Brand from "../../admin.schema/brand";
-import { get } from "http";
 import mongoose from "mongoose";
+import MyCart from "../../../user/model/myCart";
 
 interface MulterRequest extends Request {
     // file?: Express.Multer.File; // use File for a single file
     files?: Express.Multer.File[]; // use files for a multiple file
 }
+
+interface AuthenticatedRequest extends Request {
+    user?: { userId: string }; // Define a stricter type for user
+  }
+
 
 
 
@@ -143,23 +148,6 @@ const getAllProducts = async(req:Request,res:Response):Promise<void>=>{
     }
 }
 
-const getSingleProduct = async(req:Request, res:Response)=>{
-    try {
-        const productId = req.params.id;
-        const product = await Product.findById(productId)
-        if(!product){
-            res.status(404).json({ success: false, message: "Unable to get the product"})
-        }
-         product.productViews += 1
-         await product.save()   
-        res.status(200).json({success:true, message:"Product fetched successfully",data:product})
-
-
-    } catch (error:any) {
-        console.log(error)
-        res.status(500).json({success:false, message:"Internal Server Error", error:error.message})
-    }
-}
 
 
 const getProductsByBrands = async (req: Request, res: Response) => {
@@ -198,8 +186,44 @@ const getProductsByBrands = async (req: Request, res: Response) => {
 };
 
 
+const getSingleProduct = async (req:AuthenticatedRequest, res:Response) :Promise<void> =>{
+    try {
+        const productId = req.params.id;
+        // const userId = req?.user?.userId
+
+        // console.log(productId, userId, "testing")
+
+        if(!productId)  {
+            res.status(401).json({success:false, message:"Product id is required"}) 
+            return
+        }
+
+        const singleProduct = await Product.findById(productId)
+
+        if(!singleProduct){
+      res.status(401).json({success:false, message:"Product not found"})
+      return
+        }
+
+        let inCart:boolean = false
+        // if(userId){
+        //     const mycart = await MyCart.countDocuments({userId, productId})
+            
+        //     inCart = mycart > 0 
+        // }
+
+            
+
+        res.status(201).json({success:true, message:"Product Found Successfully", data:singleProduct, inCart})
 
 
+    } catch (error) {
+        console.error("Error fetching single product:", error);
+        res.status(500).json({ success: false, message: "Server error" });  
+    }
+}
 
 
-export { addProduct,getAllProducts, getSingleProduct, getProductsByBrands};
+export { addProduct,getAllProducts,  getProductsByBrands, getSingleProduct};
+
+

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import SignUpContext from "@/provider/SignUpContext";
-import CardProvider from "@/provider/AddToCardContext";
+
+import  { AddCardProvider } from "@/provider/AddToCartContext";
+import { LoginUserProvider } from "@/provider/SignUpContext";
 
 
 const geistSans = localFont({
@@ -33,13 +34,15 @@ export default function RootLayout({
       suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <CardProvider>
-        <SignUpContext>
+        <LoginUserProvider>
+        <AddCardProvider>
+        
           <main>
           {children}
           </main>
-        </SignUpContext>
-        </CardProvider>
+        
+        </AddCardProvider>
+        </LoginUserProvider>
         
       </body>
     </html>

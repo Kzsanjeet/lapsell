@@ -13,7 +13,8 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 import toast from "react-hot-toast";
 import Loader from "./Loader";
 import { headers } from "next/headers";
-import { UserContext } from "@/provider/SignUpContext";
+import { LoginUserContext } from "@/provider/SignUpContext";
+
 
 
 interface User {
@@ -25,7 +26,7 @@ interface User {
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null); // Expect a single user object
   const [loading, setLoading] = useState<boolean>(true);
-  const {isLoggedIn,setIsLoggedIn} = useContext(UserContext)!
+  const {isLoggedIn,setIsLoggedIn} = useContext(LoginUserContext)!
 
   const getLoginUser = async () => {
     try {

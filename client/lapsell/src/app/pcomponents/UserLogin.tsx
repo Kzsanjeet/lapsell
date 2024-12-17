@@ -1,7 +1,9 @@
 "use client";
-import { UserContext } from '@/provider/SignUpContext';
+
+import { LoginUserContext } from '@/provider/SignUpContext';
 import React, { FormEvent, useContext, useState } from 'react'
 import toast from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 
 const UserLogin = ({ onSuccessLogin }: { onSuccessLogin: () => void }) => {
@@ -9,7 +11,9 @@ const UserLogin = ({ onSuccessLogin }: { onSuccessLogin: () => void }) => {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const {isLoggedIn, setIsLoggedIn} = useContext(UserContext)!
+
+  const {setIsLoggedIn} = useContext(LoginUserContext)!
+  
 
   const handleSubmit = async(e:FormEvent) =>{
     e.preventDefault()
@@ -31,11 +35,13 @@ const UserLogin = ({ onSuccessLogin }: { onSuccessLogin: () => void }) => {
       const data = await res.json()
       if(data.success){
         toast.success("Login successful")
+        Cookies.set("userId", data.userId)
         setIsLoggedIn(true)
         setTimeout(() => {
           onSuccessLogin()
         },1000);
         setLoading(false)
+
       }else{
         alert("Invalid user email or password")
       }

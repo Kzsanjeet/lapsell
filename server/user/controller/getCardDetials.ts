@@ -2,25 +2,29 @@ import { Request, Response } from "express";
 // import AddToCart from "../model/addToCard";
 import mongoose from "mongoose";
 import MyCart from "../model/myCart";
+import User from "../../admin/admin.schema/adminUser";
 
-interface AuthenticatedRequest extends Request {
-  user?: any;
-}
 
-const getCardDetails = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+
+const getCardDetails = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId;  
+    const userId = req.query.id
+
+    console.log(userId)
+    
 
     // Validate userId
-    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+    if (!userId ) {
       res.status(400).json({ success: false, message: "Invalid or missing user ID" });
       return;
     }
 
-    const getCard = await MyCart.find({ user: userId })
-      .populate("product") // `product` is a reference to the Product model
-      // .select("_id name images price") 
+    const getUser  = await User.findById(userId)
 
+    console.log(getUser)
+
+    const getCard = await MyCart.find({ user: userId }).populate("product","images name price").select("_id quantity");
+    console.log(getCard)
     if (getCard.length === 0) {
       res.status(404).json({
         success: false,

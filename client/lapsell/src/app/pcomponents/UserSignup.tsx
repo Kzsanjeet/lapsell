@@ -1,6 +1,6 @@
 "use client";
 
-import { UserContext } from "@/provider/SignUpContext";
+import { LoginUserContext } from "@/provider/SignUpContext";
 import Link from "next/link";
 import React, { FormEvent, useContext, useState } from "react";
 import toast from "react-hot-toast";
@@ -15,7 +15,7 @@ const UserSignup = ({ onSuccessLogin }: { onSuccessLogin: () => void }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const {isLoggedIn,setIsLoggedIn} = useContext(UserContext)!
+  const {isLoggedIn,setIsLoggedIn} = useContext(LoginUserContext)!
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
