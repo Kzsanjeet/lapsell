@@ -57,8 +57,11 @@ interface ProductType {
 
 interface CardItemType {
   _id: string;
-  product: ProductType;
   quantity: number;
+  productImage: string[];
+  productName: string;
+  productPrice: number;
+  totalPrice: number;
 }
 
 interface AddCardContextType {

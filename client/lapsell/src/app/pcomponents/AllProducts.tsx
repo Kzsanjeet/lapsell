@@ -119,7 +119,7 @@ const AllProducts = () => {
       </div>
 
       {/* Products Container */}
-      <div className="bg-gray-100 h-screen w-5/6 ml-auto pl-6 pt-32 pr-6">
+      <div className="bg-gray-100 h-full w-5/6 ml-auto pl-6 pt-32 pr-6">
         <h1 className="flex text-2xl font-semibold items-center justify-center mt-6">All Products</h1>
         {loading && <h1>Products Loading, Please Wait</h1>}
         {!loading && (

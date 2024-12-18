@@ -4,6 +4,7 @@ import "./globals.css";
 
 import  { AddCardProvider } from "@/provider/AddToCartContext";
 import { LoginUserProvider } from "@/provider/SignUpContext";
+import { Toaster } from "react-hot-toast";
 
 
 const geistSans = localFont({
@@ -34,6 +35,7 @@ export default function RootLayout({
       suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Toaster/>
         <LoginUserProvider>
         <AddCardProvider>
         
@@ -43,6 +45,7 @@ export default function RootLayout({
         
         </AddCardProvider>
         </LoginUserProvider>
+        
         
       </body>
     </html>

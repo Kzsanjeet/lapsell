@@ -206,11 +206,9 @@ const getSingleProduct = async (req:AuthenticatedRequest, res:Response) :Promise
         }
 
         let inCart:boolean = false
-        // if(userId){
-        //     const mycart = await MyCart.countDocuments({userId, productId})
-            
-        //     inCart = mycart > 0 
-        // }
+        singleProduct.productViews += 1
+
+        await singleProduct.save()
 
             
 

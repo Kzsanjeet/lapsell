@@ -144,7 +144,7 @@ useEffect(()=>{
       });
   
       const data = await response.json();
-      console.log(data);
+      console.log(data, "test brand");
   
       // Handle the response
       if (data.success) {
